@@ -3,3 +3,11 @@
 @media(max-width:600px){body{font-size:16px}.page{padding:28px 16px 16px}.hero{padding:0 2px 24px}.card{padding:22px 20px;border-radius:14px}.steps{gap:5px;font-size:.8rem}.steps span{display:block;margin:0}.actions{flex-direction:column}.primary{width:100%}.result-layout{align-items:flex-start;flex-direction:column;gap:12px}.score{min-width:96px;height:96px}h2{font-size:1.18rem}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 .assignment-note{font-size:.87rem;color:var(--muted);margin:4px 0 0}
+#step-1{line-height:1.55}
+#step-1 h2{margin-bottom:10px}
+#step-1 p{margin-bottom:8px}
+#step-1 label{margin:12px 0 4px}
+#step-1 .help{margin:4px 0 8px}
+#step-1 textarea{line-height:1.5}
+#step-1 .feedback:empty{display:none}
+#check-keywords-btn{margin-top:14px}
