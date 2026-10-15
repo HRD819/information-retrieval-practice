@@ -1,6 +1,6 @@
 # 資訊檢索大師的養成：菜鳥先飛班
 
-由 Google Sites 內嵌教材整理而成的獨立靜態網站，保留十個情境任務、隨機出題、解析需求、擴展詞彙與檢索句評分。80 分可前進下一關。
+由 Google Sites 內嵌教材整理而成的獨立靜態網站。每位訪客從十個情境中隨機取得一題，完成解析需求、擴展詞彙與檢索句評分；達到 80 分即完成練習。
 
 ## 網站
 
@@ -10,7 +10,7 @@ https://hrd819.github.io/information-retrieval-practice/
 
 - `src/quests.js`：題目、提示與分數，每題總分 100。
 - `src/index.html`、`src/styles.css`：教學介面與響應式版面。
-- `src/app.js`：練習流程；`src/scoring.js`：語法規則。
+- `src/app.js`：練習流程；`src/assignment.js`：訪客題目分配；`src/scoring.js`：語法規則。
 - `tests/scoring.test.js`：十題正確／空白作答及評分回歸檢查。
 
 使用 Node.js 24，無第三方安裝依賴：
@@ -30,5 +30,7 @@ npm run ci
 分數代表本題語法規則的符合程度，不等於實際搜尋品質。Google 的即時檢索結果不由本網站驗證；搜尋語法依平台而異。參考 [Google 官方搜尋說明](https://support.google.com/websearch/answer/2466433?hl=zh-Hant)。
 
 頁面不儲存作答紀錄、沒有第三方分析工具，也不載入 CDN 腳本或外部字型。使用者點選 Google 驗證時才開啟含檢索句的搜尋頁。本網站設定 `noindex, nofollow`，但 GitHub Pages 與原始碼仍為公開，並非存取控制。
+
+分配的題號保存在訪客瀏覽器的 `localStorage`，因此同一瀏覽器重新整理仍會得到同一題；清除網站資料、換瀏覽器或使用無痕模式時會重新分配。純靜態網站的隨機分配不保證不同訪客一定拿到不同題，也不限制每題分配人數。
 
 部署流程參考 [GitHub Pages 官方說明](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。

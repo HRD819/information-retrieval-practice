@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="從解析需求、擴展詞彙到組合檢索句，透過十個情境練習資訊檢索。">
+  <meta name="description" content="從十個資訊檢索情境中分配一題，練習解析需求、擴展詞彙與組合檢索句。">
   <meta name="theme-color" content="#111c2d">
   <title>資訊檢索大師的養成｜菜鳥先飛班</title>
   <link rel="stylesheet" href="./styles.css">
@@ -17,8 +17,7 @@
     <p class="eyebrow">資訊檢索練習 · 菜鳥先飛班</p>
     <h1>資訊檢索大師的養成</h1>
     <p class="subtitle">把你的檢索語法技能練到滿級！</p>
-    <div class="progress-label"><span id="quest-progress"></span><span>每關 80 分即可前進</span></div>
-    <progress id="progress" value="0" max="10" aria-label="已完成關卡"></progress>
+    <p class="assignment-note">每位訪客隨機分配一個任務，80 分即可完成練習。同一瀏覽器再次開啟會顯示相同任務。</p>
   </header>
   <main id="main">
     <section class="card quest" aria-labelledby="quest-title">
@@ -78,13 +77,11 @@
     <section id="result-card" class="card" aria-labelledby="result-title" hidden>
       <h2 id="result-title" tabindex="-1">批改結果</h2>
       <div class="result-layout"><div class="score"><span id="score-display">0</span><small>／100 分</small></div><div id="feedback-list"></div></div>
-      <p id="completion-message" class="success" hidden>恭喜你，檢索大師！你已經完成所有挑戰！</p>
-      <button id="next-quest-btn" class="primary" hidden>挑戰下一關！ →</button>
-      <button id="restart-btn" class="primary" hidden>重新挑戰全部關卡</button>
+      <p id="completion-message" class="success" hidden>恭喜你，已完成這次的檢索任務！</p>
     </section>
     <noscript><p class="card">這份互動練習需要啟用 JavaScript 才能使用。</p></noscript>
   </main>
-  <footer>解析需求 · 擴展詞彙 · 組合檢索<br><small>本頁不收集姓名或儲存作答紀錄；重新整理後會重新開始。</small></footer>
+  <footer>解析需求 · 擴展詞彙 · 組合檢索<br><small>本頁不收集姓名或儲存作答紀錄；只在此瀏覽器記住分配的題目。</small></footer>
 </div>
 </body>
 </html>
