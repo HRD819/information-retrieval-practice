@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="從解析需求、擴展詞彙到組合檢索句，透過十個情境練習資訊檢索。">
+  <meta name="theme-color" content="#111c2d">
+  <title>資訊檢索大師的養成｜菜鳥先飛班</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳至練習內容</a>
+<div class="page">
+  <header class="hero">
+    <p class="eyebrow">資訊檢索練習 · 菜鳥先飛班</p>
+    <h1>資訊檢索大師的養成</h1>
+    <p class="subtitle">把你的檢索語法技能練到滿級！</p>
+    <div class="progress-label"><span id="quest-progress"></span><span>每關 80 分即可前進</span></div>
+    <progress id="progress" value="0" max="10" aria-label="已完成關卡"></progress>
+  </header>
+  <main id="main">
+    <section class="card quest" aria-labelledby="quest-title">
+      <p class="eyebrow">當前任務</p>
+      <h2 id="quest-title" tabindex="-1"></h2>
+      <p id="quest-description"></p>
+    </section>
+    <ol class="steps" aria-label="練習步驟">
+      <li aria-current="step"><span>01</span> 解析需求</li>
+      <li><span>02</span> 擴展詞彙</li>
+      <li><span>03</span> 組合檢索</li>
+    </ol>
+    <section id="step-1" class="card" aria-labelledby="step-1-title">
+      <h2 id="step-1-title">步驟一：解析需求</h2>
+      <p>請從上方的任務描述中，抽取出你認為最重要的關鍵詞彙 3 個以上。</p>
+      <p class="muted">找出重要的觀念／概念、專有名詞、重要詞彙等。</p>
+      <label for="keyword-input">你的關鍵詞彙</label>
+      <p id="keyword-help" class="help">每個詞彙用逗號、頓號或換行隔開；純中文詞彙也可以用空格。英文片語如 Pixel 9 請保持完整。</p>
+      <textarea id="keyword-input" rows="2" placeholder="例如：觀念 A，專有名詞 B，詞彙 C" aria-describedby="keyword-help keyword-feedback"></textarea>
+      <p id="keyword-feedback" class="feedback" role="status"></p>
+      <button id="check-keywords-btn" class="primary">下一步：擴展詞彙 <span aria-hidden="true">→</span></button>
+    </section>
+    <section id="step-2" class="card" aria-labelledby="step-2-title" hidden>
+      <h2 id="step-2-title">步驟二：擴展詞彙</h2>
+      <p>請思考如何調整每個詞彙，以檢索到更多相關資訊：</p>
+      <ol class="instructions">
+        <li>擴展同義詞詞彙（同義詞、不同語文的同義詞）。</li>
+        <li>考慮詞彙的階層關係（廣義詞、狹義詞、相關詞等）。</li>
+        <li>考慮字尾變化（詞性、單複數、縮寫等）。</li>
+      </ol>
+      <p class="help">請用 <code>OR</code> 連接同類詞彙；含空格的英文片語可加上雙引號。</p>
+      <div id="expansion-input-container"></div>
+      <p id="expansion-feedback" class="feedback" role="status"></p>
+      <div class="actions"><button id="back-to-step1-btn" class="secondary">返回上一步</button><button id="check-expansion-btn" class="primary">下一步：組合擴展 →</button></div>
+    </section>
+    <section id="step-3" class="card" aria-labelledby="step-3-title" hidden>
+      <h2 id="step-3-title">步驟三：詠唱咒語（檢索句）</h2>
+      <p>調整你的檢索句，讓搜尋結果更貼近任務需求。</p>
+      <details id="cheat-sheet">
+        <summary>咒語小抄（需要時點我）</summary>
+        <ul>
+          <li><strong>布林邏輯：</strong><code>AND</code>（且）、<code>OR</code>（或）、<code>-</code>（排除）。不同檢索系統的語法可能不同。</li>
+          <li><strong>片語查詢：</strong>用雙引號 <code>" "</code> 將關鍵詞包起來，例如 <code>"information literacy"</code>。</li>
+          <li><strong>萬用字元／切截：</strong><code>*</code> 的意義依系統而異；請查閱使用中資料庫的說明。</li>
+          <li><strong>鄰近檢索：</strong>本練習以 <code>"數位典藏" AROUND(8) "博物館"</code> 示範詞彙距離；實際支援情形依檢索系統而異。</li>
+          <li><strong>欄位限制：</strong><code>site:</code>（網站）、<code>filetype:</code>（檔案類型）、<code>intitle:</code>（標題）。冒號後不要留空格。</li>
+        </ul>
+        <a href="https://support.google.com/websearch/answer/2466433?hl=zh-Hant" target="_blank" rel="noopener noreferrer">Google 搜尋官方說明（另開分頁）</a>
+      </details>
+      <label for="search-query">你的檢索句</label>
+      <textarea id="search-query" rows="4" placeholder="在這裡輸入你的通關密語……" aria-describedby="grading-note"></textarea>
+      <p id="grading-note" class="help">分數依本題指定語法評定，作為練習回饋；實際結果仍需判讀。點選 Google 驗證會將此檢索句送至 Google，並另開分頁。</p>
+      <div class="actions"><button id="check-btn" class="accent">批改我的咒語</button><button id="search-btn" class="secondary">用 Google 大神驗證 ↗</button></div>
+      <button id="back-to-step2-btn" class="text-button">← 返回上一步</button>
+      <p id="search-feedback" class="feedback" role="status"></p>
+    </section>
+    <section id="result-card" class="card" aria-labelledby="result-title" hidden>
+      <h2 id="result-title" tabindex="-1">批改結果</h2>
+      <div class="result-layout"><div class="score"><span id="score-display">0</span><small>／100 分</small></div><div id="feedback-list"></div></div>
+      <p id="completion-message" class="success" hidden>恭喜你，檢索大師！你已經完成所有挑戰！</p>
+      <button id="next-quest-btn" class="primary" hidden>挑戰下一關！ →</button>
+      <button id="restart-btn" class="primary" hidden>重新挑戰全部關卡</button>
+    </section>
+    <noscript><p class="card">這份互動練習需要啟用 JavaScript 才能使用。</p></noscript>
+  </main>
+  <footer>解析需求 · 擴展詞彙 · 組合檢索<br><small>本頁不收集姓名或儲存作答紀錄；重新整理後會重新開始。</small></footer>
+</div>
+</body>
+</html>
