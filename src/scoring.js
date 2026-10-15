@@ -11,6 +11,33 @@ export function tokenize(query) {
   return (query.replace(/[“”]/g, '"').match(/-?(?:[a-z]+:)?"[^"]*"|AROUND\(\d+\)|[()]|\||[^\s()]+/gi) || []).map(s => s.toLowerCase());
 }
 const unquote = s => s.replace(/^"|"$/g, '');
+function excludedTerms(tokens) {
+  const excluded = new Set();
+  tokens.forEach((token, i) => {
+    if (token.startsWith('-') && token.length > 1) excluded.add(unquote(token.slice(1)));
+    if (token !== 'not') return;
+    if (tokens[i + 1] !== '(') {
+      const term = tokens[i + 1];
+      if (term && !['or', 'and', '|', ')'].includes(term) && !term.startsWith('-')) excluded.add(unquote(term));
+      return;
+    }
+    const close = tokens.indexOf(')', i + 2);
+    if (close < 0) return;
+    const group = tokens.slice(i + 2, close);
+    if (group.length % 2 !== 1 || group.some((part, j) => j % 2 ? !['or', '|'].includes(part) : !part || ['or', 'and', '|', '('].includes(part) || part.startsWith('-'))) return;
+    group.filter((_, j) => j % 2 === 0).forEach(term => excluded.add(unquote(term)));
+  });
+  return excluded;
+}
+export function toGoogleQuery(query) {
+  const term = '"[^"]+"|[^\\s()]+';
+  const group = new RegExp(`\\bNOT\\s*\\(\\s*(${term})(?:\\s+OR\\s+(${term}))*\\s*\\)`, 'gi');
+  return query.replace(group, match => {
+    const terms = match.slice(match.indexOf('(') + 1, -1).match(/"[^"]+"|[^\s()]+/g) || [];
+    if (terms.some((part, i) => i % 2 ? part.toUpperCase() !== 'OR' : part.toUpperCase() === 'OR')) return match;
+    return terms.filter((_, i) => i % 2 === 0).map(part => `-${part}`).join(' ');
+  }).replace(/\bNOT\s+("[^"]+"|[^\s()]+)/gi, (_, value) => `-${value}`);
+}
 function hasOrGroup(tokens, values, requireParentheses = false) {
   const wanted = values.map(s => s.toLowerCase());
   for (let i = 0; i < tokens.length; i++) {
@@ -32,8 +59,8 @@ export function passes(check, query) {
   switch (check.type) {
     case 'phrase': return positive.includes(`"${value}"`);
     case 'include': return positive.some(t => unquote(t) === value);
-    case 'exclude': return [value, ...(check.alternatives || [])].some(v => tokens.includes(`-${v}`) || tokens.includes(`-"${v}"`));
-    case 'exclude_or': return values.every(v => tokens.includes(`-${v}`) || tokens.includes(`-"${v}"`));
+    case 'exclude': return [value, ...(check.alternatives || [])].some(v => excludedTerms(tokens).has(v.toLowerCase()));
+    case 'exclude_or': return values.every(v => excludedTerms(tokens).has(v));
     case 'filetype': return tokens.includes(`filetype:${value}`);
     case 'site': return tokens.includes(`site:${value}`);
     case 'filetype_or': return hasOrGroup(tokens, values);

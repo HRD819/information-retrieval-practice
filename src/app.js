@@ -1,5 +1,5 @@
 import { quests as sourceQuests } from './quests.js';
-import { parseKeywords, grade } from './scoring.js';
+import { parseKeywords, grade, toGoogleQuery } from './scoring.js';
 import { assignedQuestIndex } from './assignment.js';
 const $ = id => document.getElementById(id);
 let storage;
@@ -80,6 +80,6 @@ $('search-btn').addEventListener('click', () => {
   const query = $('search-query').value.trim();
   if (!query) { $('search-feedback').textContent = '請先輸入你的檢索句！'; $('search-query').focus(); return; }
   $('search-feedback').textContent = '';
-  window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank', 'noopener,noreferrer');
+  window.open(`https://www.google.com/search?q=${encodeURIComponent(toGoogleQuery(query))}`, '_blank', 'noopener,noreferrer');
 });
 loadQuest();

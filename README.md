@@ -29,6 +29,8 @@ npm run ci
 
 分數代表本題語法規則的符合程度，不等於實際搜尋品質。Google 的即時檢索結果不由本網站驗證；搜尋語法依平台而異。參考 [Google 官方搜尋說明](https://support.google.com/websearch/answer/2466433?hl=zh-Hant)。
 
+排除詞評分接受 `-詞彙`、`NOT 詞彙`，以及 `NOT (詞彙 OR 詞彙)`。選擇「用 Google 大神驗證」時，會把這些 `NOT` 排除式轉成 Google 說明中的 `-詞彙` 格式，再開啟搜尋。
+
 頁面不儲存作答紀錄、沒有第三方分析工具，也不載入 CDN 腳本或外部字型。使用者點選 Google 驗證時才開啟含檢索句的搜尋頁。本網站設定 `noindex, nofollow`，但 GitHub Pages 與原始碼仍為公開，並非存取控制。
 
 上一題的題號暫存在該分頁的 `sessionStorage`，供重新整理時排除；關閉分頁後不保留。純靜態網站的隨機分配不保證不同訪客一定拿到不同題，也不限制每題分配人數。

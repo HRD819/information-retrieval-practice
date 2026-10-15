@@ -53,7 +53,7 @@
       <details id="cheat-sheet">
         <summary>咒語小抄（需要時點我）</summary>
         <ul>
-          <li><strong>布林邏輯：</strong><code>AND</code>（且）、<code>OR</code>（或）、<code>-</code>（排除）。不同檢索系統的語法可能不同。</li>
+          <li><strong>布林邏輯：</strong><code>AND</code>（且）、<code>OR</code>（或）、<code>NOT</code>（非）。在 Google 中排除詞彙請用 <code>-</code>。</li>
           <li><strong>片語查詢：</strong>用雙引號 <code>" "</code> 將關鍵詞包起來，例如 <code>"information literacy"</code>。</li>
           <li><strong>萬用字元／切截：</strong><code>*</code> 的意義依系統而異；請查閱使用中資料庫的說明。</li>
           <li><strong>鄰近檢索：</strong>本練習以 <code>"數位典藏" AROUND(8) "博物館"</code> 示範詞彙距離；實際支援情形依檢索系統而異。</li>
@@ -63,7 +63,7 @@
       </details>
       <label for="search-query">你的檢索句</label>
       <textarea id="search-query" rows="4" placeholder="在這裡輸入你的通關密語……" aria-describedby="grading-note"></textarea>
-      <p id="grading-note" class="help">分數依本題指定語法評定，作為練習回饋；實際結果仍需判讀。點選 Google 驗證會將此檢索句送至 Google，並另開分頁。</p>
+      <p id="grading-note" class="help">分數依本題指定語法評定，作為練習回饋；實際結果仍需判讀。點選 Google 驗證會將檢索句送至 Google，並將 <code>NOT</code> 排除詞轉為 <code>-</code>，另開分頁。</p>
       <div class="actions"><button id="check-btn" class="accent">批改我的咒語</button><button id="search-btn" class="secondary">用 Google 大神驗證 ↗</button></div>
       <button id="back-to-step2-btn" class="text-button">← 返回上一步</button>
       <p id="search-feedback" class="feedback" role="status"></p>

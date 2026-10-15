@@ -322,7 +322,7 @@ export const quests = [
         "type": "exclude",
         "value": "誠品",
         "score": 30,
-        "hint": "不想去誠品？一個簡單的 `-誠品` 就能幫你排除它。"
+        "hint": "要排除誠品，可寫 `-誠品`、`NOT 誠品`，或 `NOT (誠品 OR 連鎖)`。"
       }
     ]
   },

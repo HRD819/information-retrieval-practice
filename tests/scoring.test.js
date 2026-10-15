@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseKeywords, grade, passes } from '../src/scoring.js';
+import { parseKeywords, grade, passes, toGoogleQuery } from '../src/scoring.js';
 import { quests } from '../src/quests.js';
 const answers = [
   '"麻婆豆腐" 四川 -豬絞肉 -牛肉 素食',
@@ -45,4 +45,26 @@ test('同義詞須以 OR 連接，且保留片語引號', () => {
   const c = quests[4].solutionChecks[0];
   assert.equal(passes(c, '(資訊素養 "information literacy") x OR y'), false);
   assert.equal(passes(c, '(資訊素養 OR information literacy)'), false);
+});
+test('排除誠品接受減號、NOT 與 NOT OR 群組', () => {
+  for (const exclusion of ['-誠品', 'NOT 誠品', 'not (誠品 OR 連鎖)']) {
+    assert.equal(grade(quests[8], `台南 "獨立書店" ${exclusion}`).score, 100);
+  }
+  for (const invalid of ['NOT', 'NOT (誠品 AND 連鎖)', 'NOT (連鎖 OR 商場)', 'notation 誠品']) {
+    assert.equal(passes(quests[8].solutionChecks[2], invalid), false);
+  }
+});
+test('多個排除詞允許個別 NOT 或整組 NOT OR', () => {
+  const check = quests[0].solutionChecks[2];
+  for (const query of ['NOT 豬絞肉 NOT 牛肉', 'NOT (豬絞肉 OR 牛肉)', 'NOT ("豬絞肉" OR 牛肉)', '-豬絞肉 NOT 牛肉']) {
+    assert.equal(passes(check, query), true);
+  }
+  assert.equal(passes(check, 'NOT (豬絞肉 AND 牛肉)'), false);
+  assert.equal(passes(check, 'NOT 豬絞肉 牛肉'), false);
+});
+test('送往 Google 前只將支援的 NOT 排除式改成減號', () => {
+  assert.equal(toGoogleQuery('台南 "獨立書店" NOT 誠品'), '台南 "獨立書店" -誠品');
+  assert.equal(toGoogleQuery('台南 "獨立書店" not (誠品 OR 連鎖)'), '台南 "獨立書店" -誠品 -連鎖');
+  assert.equal(toGoogleQuery('NOT ("豬絞肉" OR 牛肉) NOT 素食'), '-"豬絞肉" -牛肉 -素食');
+  assert.equal(toGoogleQuery('NOT (誠品 AND 連鎖)'), 'NOT (誠品 AND 連鎖)');
 });
