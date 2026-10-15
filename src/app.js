@@ -9,9 +9,6 @@ let expansions = new Map(), lastGenerated = '';
 const labels = { phrase:'片語查詢', include:'必要關鍵詞', exclude:'排除詞彙', exclude_or:'排除指定詞彙', filetype:'檔案格式', filetype_or:'多種檔案格式', site:'網站限制', site_or:'多個網站的 OR 組合', site_any:'社群網站限制', intitle_all:'標題限制', proximity:'鄰近檢索', synonym_or:'跨語系 OR 組合' };
 function step(number, focus = true) {
   for (let n = 1; n <= 3; n++) $(`step-${n}`).hidden = n !== number;
-  document.querySelectorAll('.steps li').forEach((li, i) => {
-    if (i === number - 1) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
-  });
   $('result-card').hidden = true;
   if (focus) (number === 1 ? $('keyword-input') : number === 2 ? $('expansion-input-container').querySelector('input') : $('search-query')).focus();
 }
