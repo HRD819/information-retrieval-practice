@@ -4,7 +4,7 @@ import { assignedQuestIndex } from './assignment.js';
 const $ = id => document.getElementById(id);
 let storage;
 try { storage = window.sessionStorage; } catch { storage = { getItem: () => null, setItem: () => {} }; }
-const quest = sourceQuests[assignedQuestIndex(storage, values => crypto.getRandomValues(values), sourceQuests.length)];
+let quest = sourceQuests[assignedQuestIndex(storage, values => crypto.getRandomValues(values), sourceQuests.length)];
 let expansions = new Map(), lastGenerated = '';
 const labels = { phrase:'片語查詢', include:'必要關鍵詞', exclude:'排除詞彙', exclude_or:'排除指定詞彙', filetype:'檔案格式', filetype_or:'多種檔案格式', site:'網站限制', site_or:'多個網站的 OR 組合', site_any:'社群網站限制', intitle_all:'標題限制', proximity:'鄰近檢索', synonym_or:'跨語系 OR 組合' };
 function step(number, focus = true) {
@@ -18,6 +18,7 @@ function loadQuest() {
   ['keyword-input','search-query'].forEach(id => $(id).value = '');
   ['keyword-feedback','expansion-feedback','search-feedback'].forEach(id => $(id).textContent = '');
   $('completion-message').hidden = true;
+  $('next-quest-btn').hidden = true;
   $('expansion-input-container').replaceChildren();
   $('cheat-sheet').open = false;
   expansions = new Map(); lastGenerated = ''; step(1, false);
@@ -64,10 +65,16 @@ $('check-btn').addEventListener('click', () => {
   });
   $('result-card').hidden = false;
   $('completion-message').hidden = score < 80;
+  $('next-quest-btn').hidden = score < 80;
   $('result-title').focus();
 });
 $('search-query').addEventListener('input', () => {
   $('result-card').hidden = true;
+});
+$('next-quest-btn').addEventListener('click', () => {
+  quest = sourceQuests[assignedQuestIndex(storage, values => crypto.getRandomValues(values), sourceQuests.length)];
+  loadQuest();
+  $('quest-title').focus();
 });
 $('search-btn').addEventListener('click', () => {
   const query = $('search-query').value.trim();
