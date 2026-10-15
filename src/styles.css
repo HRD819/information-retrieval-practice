@@ -11,3 +11,6 @@
 #step-1 textarea{line-height:1.5}
 #step-1 .feedback:empty{display:none}
 #check-keywords-btn{margin-top:14px}
+.hero{padding-bottom:16px}
+.hero .subtitle{margin-bottom:8px}
+.hero .assignment-note{margin-top:0;line-height:1.6}
